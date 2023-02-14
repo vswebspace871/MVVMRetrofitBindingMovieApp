@@ -1,5 +1,6 @@
 package com.example.mvvmretrofitbindingmovieapp.model;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
 
@@ -16,11 +17,8 @@ import com.example.mvvmretrofitbindingmovieapp.BR;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.parceler.Parcel;
 
-
-@Parcel
-public class MovieModel extends BaseObservable  {
+public class MovieModel extends BaseObservable implements Parcelable {
 
     @SerializedName("poster_path")
     @Expose
@@ -72,26 +70,8 @@ public class MovieModel extends BaseObservable  {
         this.title = title;
     }
 
-    /*public MovieModel(Parcel in) {
-        this.posterPath = posterPath;
-        this.adult = adult;
-        this.overview = overview;
-        this.releaseDate = releaseDate;
-        this.genreIds = genreIds;
-        this.id = id;
-        this.originalTitle = originalTitle;
-        this.originalLanguage = originalLanguage;
-        this.title = title;
-        this.backdropPath = backdropPath;
-        this.popularity = popularity;
-        this.voteCount = voteCount;
-        this.video = video;
-        this.voteAverage = voteAverage;
-    }*/
 
-
-
-   /* protected MovieModel(Parcel in) {
+    protected MovieModel(Parcel in) {
         posterPath = in.readString();
         byte tmpAdult = in.readByte();
         adult = tmpAdult == 0 ? null : tmpAdult == 1;
@@ -135,11 +115,11 @@ public class MovieModel extends BaseObservable  {
         public MovieModel[] newArray(int size) {
             return new MovieModel[size];
         }
-    };*/
+    };
 
     @BindingAdapter({"posterPath"})
-    public static void loadImage(ImageView imageView, String imageUrl){
-        String imagePath = "https://image.tmdb.org/t/p/w500"+imageUrl;
+    public static void loadImage(ImageView imageView, String imageUrl) {
+        String imagePath = "https://image.tmdb.org/t/p/w500" + imageUrl;
 
         Glide.with(imageView.getContext()).load(imagePath).into(imageView);
     }
@@ -163,6 +143,7 @@ public class MovieModel extends BaseObservable  {
         this.adult = adult;
         notifyPropertyChanged(BR.adult);
     }
+
     @Bindable
     public String getOverview() {
         return overview;
@@ -172,6 +153,7 @@ public class MovieModel extends BaseObservable  {
         this.overview = overview;
         notifyPropertyChanged(BR.overview);
     }
+
     @Bindable
     public String getReleaseDate() {
         return releaseDate;
@@ -181,6 +163,7 @@ public class MovieModel extends BaseObservable  {
         this.releaseDate = releaseDate;
         notifyPropertyChanged(BR.releaseDate);
     }
+
     @Bindable
     public List<Integer> getGenreIds() {
         return genreIds;
@@ -190,6 +173,7 @@ public class MovieModel extends BaseObservable  {
         this.genreIds = genreIds;
         notifyPropertyChanged(BR.genreIds);
     }
+
     @Bindable
     public Integer getId() {
         return id;
@@ -199,6 +183,7 @@ public class MovieModel extends BaseObservable  {
         this.id = id;
         notifyPropertyChanged(BR.id);
     }
+
     @Bindable
     public String getOriginalTitle() {
         return originalTitle;
@@ -208,6 +193,7 @@ public class MovieModel extends BaseObservable  {
         this.originalTitle = originalTitle;
         notifyPropertyChanged(BR.originalTitle);
     }
+
     @Bindable
     public String getOriginalLanguage() {
         return originalLanguage;
@@ -217,6 +203,7 @@ public class MovieModel extends BaseObservable  {
         this.originalLanguage = originalLanguage;
         notifyPropertyChanged(BR.originalLanguage);
     }
+
     @Bindable
     public String getTitle() {
         return title;
@@ -226,6 +213,7 @@ public class MovieModel extends BaseObservable  {
         this.title = title;
         notifyPropertyChanged(BR.title);
     }
+
     @Bindable
     public String getBackdropPath() {
         return backdropPath;
@@ -235,6 +223,7 @@ public class MovieModel extends BaseObservable  {
         this.backdropPath = backdropPath;
         notifyPropertyChanged(BR.backdropPath);
     }
+
     @Bindable
     public Double getPopularity() {
         return popularity;
@@ -244,6 +233,7 @@ public class MovieModel extends BaseObservable  {
         this.popularity = popularity;
         notifyPropertyChanged(BR.popularity);
     }
+
     @Bindable
     public Integer getVoteCount() {
         return voteCount;
@@ -253,6 +243,7 @@ public class MovieModel extends BaseObservable  {
         this.voteCount = voteCount;
         notifyPropertyChanged(BR.voteCount);
     }
+
     @Bindable
     public Boolean getVideo() {
         return video;
@@ -262,6 +253,7 @@ public class MovieModel extends BaseObservable  {
         this.video = video;
         notifyPropertyChanged(BR.video);
     }
+
     @Bindable
     public Double getVoteAverage() {
         return voteAverage;
@@ -272,7 +264,7 @@ public class MovieModel extends BaseObservable  {
         notifyPropertyChanged(BR.voteAverage);
     }
 
-/*
+
     @Override
     public int describeContents() {
         return 0;
@@ -280,19 +272,38 @@ public class MovieModel extends BaseObservable  {
 
     @Override
     public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeValue(voteCount);
-        parcel.writeValue(id);
-        parcel.writeValue(video);
-        parcel.writeValue(voteAverage);
-        parcel.writeValue(title);
-        parcel.writeValue(popularity);
-        parcel.writeValue(posterPath);
-        parcel.writeValue(originalLanguage);
-        parcel.writeValue(originalTitle);
-//        parcel.writeList(genreIds);
-        parcel.writeValue(backdropPath);
-        parcel.writeValue(adult);
-        parcel.writeValue(overview);
-        parcel.writeValue(releaseDate);
-    }*/
+        parcel.writeString(posterPath);
+        parcel.writeByte((byte) (adult == null ? 0 : adult ? 1 : 2));
+        parcel.writeString(overview);
+        parcel.writeString(releaseDate);
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(id);
+        }
+        parcel.writeString(originalTitle);
+        parcel.writeString(originalLanguage);
+        parcel.writeString(title);
+        parcel.writeString(backdropPath);
+        if (popularity == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeDouble(popularity);
+        }
+        if (voteCount == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(voteCount);
+        }
+        parcel.writeByte((byte) (video == null ? 0 : video ? 1 : 2));
+        if (voteAverage == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeDouble(voteAverage);
+        }
+    }
 }

@@ -10,7 +10,7 @@ import android.util.Log;
 import com.example.mvvmretrofitbindingmovieapp.R;
 import com.example.mvvmretrofitbindingmovieapp.model.MovieModel;
 
-import org.parceler.Parcels;
+//import org.parceler.Parcels;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -23,7 +23,7 @@ public class DetailActivity extends AppCompatActivity {
 
         Parcelable parcelable = getIntent().getParcelableExtra("movie");
 
-        movieModel = Parcels.unwrap(parcelable);
+//        movieModel = Parcels.unwrap(parcelable);
 
         Log.e("TAG", "onCreate: TITLE: "+movieModel.title);
 

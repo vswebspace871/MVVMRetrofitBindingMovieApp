@@ -18,7 +18,7 @@ import com.example.mvvmretrofitbindingmovieapp.model.MovieModel;
 import com.example.mvvmretrofitbindingmovieapp.view.DetailActivity;
 import com.example.mvvmretrofitbindingmovieapp.view.MovieDetailActivity;
 
-import org.parceler.Parcels;
+//import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -71,8 +71,25 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
                     int position = getAdapterPosition();
 
-
+                    /**
+                     * Without Dependency
+                     * with the help of Parcelable Interface */
                     if (position != RecyclerView.NO_POSITION) {
+
+                        MovieModel selectedMovie = movieArrayList.get(position);
+
+                        //create a Parcel
+                        //Parcelable parcelable = Parcels.wrap(selectedMovie);
+
+                        Intent i = new Intent(context, MovieDetailActivity.class);
+                        i.putExtra("movie", selectedMovie);
+                        context.startActivity(i);
+                    }
+
+
+                    /**
+                     * WIth the help of Parceler Dependency*/
+                   /* if (position != RecyclerView.NO_POSITION) {
 
                         MovieModel selectedMovie = movieArrayList.get(position);
 
@@ -82,7 +99,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                         Intent i = new Intent(context, MovieDetailActivity.class);
                         i.putExtra("movie", parcelable);
                         context.startActivity(i);
-                    }
+                    }*/
                 }
             });
         }

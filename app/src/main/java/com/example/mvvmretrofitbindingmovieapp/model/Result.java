@@ -2,6 +2,7 @@
 package com.example.mvvmretrofitbindingmovieapp.model;
 
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
@@ -10,10 +11,10 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.parceler.Parcel;
+//import org.parceler.Parcel;
 
-@Parcel
-public class Result {
+//@Parcel
+public class Result implements Parcelable {
 
     @SerializedName("page")
     @Expose
@@ -31,7 +32,8 @@ public class Result {
     public Result() {
     }
 
-   /* protected Result(Parcel in) {
+
+    protected Result(Parcel in) {
         if (in.readByte() == 0) {
             page = null;
         } else {
@@ -48,9 +50,37 @@ public class Result {
         } else {
             totalPages = in.readInt();
         }
-    }*/
+    }
 
-    /*public static final Creator<Result> CREATOR = new Creator<Result>() {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (page == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(page);
+        }
+        dest.writeTypedList(results);
+        if (totalResults == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(totalResults);
+        }
+        if (totalPages == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(totalPages);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Result> CREATOR = new Creator<Result>() {
         @Override
         public Result createFromParcel(Parcel in) {
             return new Result(in);
@@ -60,7 +90,7 @@ public class Result {
         public Result[] newArray(int size) {
             return new Result[size];
         }
-    };*/
+    };
 
     public Integer getPage() {
         return page;
@@ -94,31 +124,5 @@ public class Result {
         this.totalPages = totalPages;
     }
 
-   /* @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        if (page == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(page);
-        }
-        parcel.writeTypedList(results);
-        if (totalResults == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(totalResults);
-        }
-        if (totalPages == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(totalPages);
-        }
-    }*/
 }

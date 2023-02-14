@@ -13,7 +13,7 @@ import com.example.mvvmretrofitbindingmovieapp.R;
 import com.example.mvvmretrofitbindingmovieapp.databinding.ActivityMovieDetailBinding;
 import com.example.mvvmretrofitbindingmovieapp.model.MovieModel;
 
-import org.parceler.Parcels;
+//import org.parceler.Parcels;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -33,7 +33,11 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         activityMovieDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail);
 
-        Intent i = getIntent();
+
+     /************************************************************************************
+      * WITH PARCELER DEPENDENCY
+     * */
+      /*  Intent i = getIntent();
 
         if (i.hasExtra("movie")) {
             Parcelable parcelable = getIntent().getParcelableExtra("movie");
@@ -41,9 +45,30 @@ public class MovieDetailActivity extends AppCompatActivity {
 //            movieModel = getIntent().getParcelableExtra("movie");
             activityMovieDetailBinding.setMovie(movieModel);
 //            Log.d("TAG", "onCreate: TITLE: "+movieModel.title);
+            getSupportActionBar().setTitle(movieModel.getTitle());
+
+        }*/
+        /********************************************************************************/
+
+
+
+       /**
+        * Without Parceler Dependency
+        *
+        * With the help of Parcelable Interface
+       * */
+        Intent i = getIntent();
+
+        if (i.hasExtra("movie")) {
+           // Parcelable parcelable = getIntent().getParcelableExtra("movie");
+            //movieModel = Parcels.unwrap(parcelable);
+            movieModel = getIntent().getParcelableExtra("movie");
+            activityMovieDetailBinding.setMovie(movieModel);
+//            Log.d("TAG", "onCreate: TITLE: "+movieModel.title);
             //getSupportActionBar().setTitle(movieModel.getTitle());
 
         }
+        /*******************************************************************************/
 
     }
 }
