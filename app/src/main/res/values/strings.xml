@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MVVMRetrofitBindingMovieApp</string>
+    <string name="api_key">df3601fe8ba5a0a92c48822e04fe4800</string>
+</resources>
